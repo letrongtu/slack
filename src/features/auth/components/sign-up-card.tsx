@@ -26,6 +26,7 @@ const SignUpCard = ({
   setState,
 }: SignUpCardProps) => {
   const { signIn } = useAuthActions();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] =
@@ -45,6 +46,7 @@ const SignUpCard = ({
     }
     setPending(true);
     signIn("password", {
+      name,
       email,
       password,
       flow: "signUp",
@@ -91,6 +93,18 @@ const SignUpCard = ({
           onSubmit={onPasswordSignUp}
           className="space-y-5 mx-12"
         >
+          <Input
+            className="w-full h-[50px] rounded-md"
+            disabled={pending}
+            value={name}
+            onChange={(e) =>
+              setName(e.target.value)
+            }
+            placeholder="Full Name"
+            type="text"
+            required
+          />
+
           <Input
             className="w-full h-[50px] rounded-md"
             disabled={pending}

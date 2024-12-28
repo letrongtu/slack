@@ -16,7 +16,7 @@ const AuthScreen = () => {
         state={state}
         setState={setState}
       />
-      <div className="md:h-auto md:w-[650px]">
+      <div className="md:h-auto md:w-[650px] pb-[5rem]">
         {state === "signIn" ? (
           <SignInCard />
         ) : (
