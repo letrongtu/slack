@@ -3,6 +3,9 @@ import "./globals.css";
 import { Poppins } from "next/font/google";
 import { ConvexClientProvider } from "@/components/convex-client-provider";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
+import Modal from "@/components/modal";
+import { Toaster } from "@/components/ui/sonner";
+import { JotaiProvider } from "@/components/ui/jotai-provider";
 
 import "./globals.css";
 
@@ -36,7 +39,11 @@ export default function RootLayout({
       <html lang="en">
         <body className={font.className}>
           <ConvexClientProvider>
-            {children}
+            <JotaiProvider>
+              <Toaster />
+              <Modal />
+              {children}
+            </JotaiProvider>
           </ConvexClientProvider>
         </body>
       </html>
