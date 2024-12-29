@@ -1,14 +1,26 @@
 import { useWorkspaceId } from "@/app/hooks/use-workspace-id";
 import { useCurrentMember } from "@/features/members/api/use_current_member";
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
+import { useGetChannels } from "@/features/channels/api/use-get-channels";
+import { useCreateChannelModal } from "@/features/channels/store/use-create-channel-modal";
+import { useGetMembers } from "@/features/members/api/use_get_members";
+
 import {
   AlertTriangle,
+  HashIcon,
   Loader,
+  MessageSquareText,
+  SendHorizontalIcon,
 } from "lucide-react";
 import { WorkspaceHeader } from "./workspace-header";
+import { SidebarItem } from "./sidebar-item";
+import { WorkspaceSection } from "./workpspace-section";
+import { UserItem } from "./user-item";
 
 export const WorkspaceSidebar = () => {
   const workspaceId = useWorkspaceId();
+
+  const [open, setOpen] = useCreateChannelModal();
 
   const {
     data: member,
@@ -18,6 +30,16 @@ export const WorkspaceSidebar = () => {
     data: workspace,
     isLoading: workspaceLoading,
   } = useGetWorkspace({ id: workspaceId });
+
+  const {
+    data: channels,
+    isLoading: channelsLoading,
+  } = useGetChannels({ workspaceId });
+
+  const {
+    data: members,
+    isLoading: membersLoading,
+  } = useGetMembers({ workspaceId });
 
   if (workspaceLoading || memberLoading) {
     return (
@@ -43,6 +65,54 @@ export const WorkspaceSidebar = () => {
         workspace={workspace}
         isAdmin={member.role === "admin"}
       />
+      <div className="flex flex-col px-2 mt-3">
+        <SidebarItem
+          label="Threads"
+          icon={MessageSquareText}
+          id="threads"
+        />
+        <SidebarItem
+          label="Drafts & Sent"
+          icon={SendHorizontalIcon}
+          id="drafts"
+        />
+      </div>
+
+      <WorkspaceSection
+        label="Channels"
+        hint="New Channel"
+        onNew={
+          member.role === "admin"
+            ? () => {
+                setOpen(true);
+              }
+            : undefined
+        }
+      >
+        {channels?.map((item) => (
+          <SidebarItem
+            key={item._id}
+            icon={HashIcon}
+            label={item.name}
+            id={item._id}
+          />
+        ))}
+      </WorkspaceSection>
+
+      <WorkspaceSection
+        label="Dirrect Messages"
+        hint="New Direct Message"
+        onNew={() => {}}
+      >
+        {members?.map((item) => (
+          <UserItem
+            key={item._id}
+            id={item._id}
+            label={item.user.name}
+            image={item.user.image}
+          />
+        ))}
+      </WorkspaceSection>
     </div>
   );
 };
