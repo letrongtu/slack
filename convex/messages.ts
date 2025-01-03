@@ -325,3 +325,46 @@ export const create = mutation({
     return messageId;
   },
 });
+
+export const update = mutation({
+  args: {
+    id: v.id("messages"),
+    body: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const userId = await auth.getUserId(ctx);
+
+    if (!userId) {
+      throw new Error("Not authenticated");
+    }
+
+    const message = await ctx.db.get(args.id);
+    if (!message) {
+      throw new Error("Message not found");
+    }
+
+    const member = await getMember(
+      ctx,
+      message.workspaceId,
+      userId
+    );
+
+    if (!member) {
+      throw new Error("Not authenticated");
+    }
+
+    if (
+      !member ||
+      member._id !== message.memberId
+    ) {
+      throw new Error("Not authenticated");
+    }
+
+    await ctx.db.patch(args.id, {
+      body: args.body,
+      updatedAt: Date.now(),
+    });
+
+    return args.id;
+  },
+});

@@ -4,6 +4,8 @@ const Renderer = dynamic(
   { ssr: false }
 );
 
+import { toast } from "sonner";
+import { UseUpdateMessage } from "@/features/messages/api/use-update-message";
 import {
   Doc,
   Id,
@@ -20,6 +22,7 @@ import {
   AvatarFallback,
 } from "./ui/avatar";
 import { Thumbnail } from "./thumbnail";
+import { Toolbar } from "./toolbar";
 
 interface MessageProps {
   id: Id<"messages">;
@@ -39,7 +42,9 @@ interface MessageProps {
   updatedAt: Doc<"messages">["updatedAt"];
   isEditing: boolean;
   isCompact?: boolean;
-  setEditingId: (id: Id<"messages">) => void;
+  setEditingId: (
+    id: Id<"messages"> | null
+  ) => void;
   hideThreadButton?: boolean;
   threadCount?: number;
   threadImage?: string;
@@ -69,6 +74,31 @@ export const Message = ({
   threadImage,
   threadTimestamp,
 }: MessageProps) => {
+  const {
+    mutate: updateMessage,
+    isPending: isUpdatingMessage,
+  } = UseUpdateMessage();
+
+  const isPending = isUpdatingMessage;
+
+  const handleUpdate = ({
+    body,
+  }: {
+    body: string;
+  }) => {
+    updateMessage(
+      { id, body },
+      {
+        onSuccess: () => {
+          toast.success("Message updated");
+          setEditingId(null);
+        },
+        onError: () => {
+          toast.error("Failed to update message");
+        },
+      }
+    );
+  };
   if (isCompact) {
     return (
       <div className="flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60 group relative">
@@ -96,6 +126,19 @@ export const Message = ({
             ) : null}
           </div>
         </div>
+        {!isEditing && (
+          <Toolbar
+            isAuthor={isAuthor}
+            isPending={false}
+            handleEdit={() => {
+              setEditingId(id);
+            }}
+            handleThread={() => {}}
+            handleDelete={() => {}}
+            handleReaction={() => {}}
+            hideThreadButton={hideThreadButton}
+          />
+        )}
       </div>
     );
   }
@@ -152,6 +195,20 @@ export const Message = ({
           ) : null}
         </div>
       </div>
+
+      {!isEditing && (
+        <Toolbar
+          isAuthor={isAuthor}
+          isPending={false}
+          handleEdit={() => {
+            setEditingId(id);
+          }}
+          handleThread={() => {}}
+          handleDelete={() => {}}
+          handleReaction={() => {}}
+          hideThreadButton={hideThreadButton}
+        />
+      )}
     </div>
   );
 };
