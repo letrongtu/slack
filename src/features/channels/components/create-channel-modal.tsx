@@ -11,7 +11,7 @@ import { useCreateChannelModal } from "../store/use-create-channel-modal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { UseCreateChannel } from "../api/use-create-channel";
-import { useWorkspaceId } from "@/app/hooks/use-workspace-id";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { toast } from "sonner";
 
 export const CreateChannelModal = () => {

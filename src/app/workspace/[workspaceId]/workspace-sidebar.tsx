@@ -1,5 +1,5 @@
-import { useChannelId } from "@/app/hooks/use-channel-id";
-import { useWorkspaceId } from "@/app/hooks/use-workspace-id";
+import { useChannelId } from "@/hooks/use-channel-id";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { useCurrentMember } from "@/features/members/api/use_current_member";
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
 import { useGetChannels } from "@/features/channels/api/use-get-channels";

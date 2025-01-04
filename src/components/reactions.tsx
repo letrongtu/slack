@@ -3,7 +3,7 @@ import {
   Doc,
   Id,
 } from "../../convex/_generated/dataModel";
-import { useWorkspaceId } from "@/app/hooks/use-workspace-id";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { useCurrentMember } from "@/features/members/api/use_current_member";
 import { cn } from "@/lib/utils";
 import { Hint } from "./ui/hint";

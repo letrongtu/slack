@@ -9,7 +9,7 @@ import {
 import { GetMessagesReturnType } from "@/features/messages/api/use-get-messages";
 import { Message } from "./message";
 import { ChannelHero } from "./channel-hero";
-import { useWorkspaceId } from "@/app/hooks/use-workspace-id";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { useCurrentMember } from "@/features/members/api/use_current_member";
 import { Loader2 } from "lucide-react";
 
@@ -126,7 +126,9 @@ export const MessageList = ({
                   }
                   setEditingId={setEditingId}
                   isCompact={isCompact}
-                  hideThreadButton={false}
+                  hideThreadButton={
+                    variant === "thread"
+                  }
                   threadCount={
                     message.threadCount
                   }

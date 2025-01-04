@@ -1,5 +1,5 @@
-import { useChannelId } from "@/app/hooks/use-channel-id";
-import { useWorkspaceId } from "@/app/hooks/use-workspace-id";
+import { useChannelId } from "@/hooks/use-channel-id";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { UseCreateMessage } from "@/features/messages/api/use-create-message";
 import { UseGenerateUploadUrl } from "@/features/upload/api/use-generate-upload-url";
 import dynamic from "next/dynamic";

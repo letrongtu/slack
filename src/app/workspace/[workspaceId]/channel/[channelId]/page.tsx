@@ -2,7 +2,7 @@
 import { Header } from "./header";
 import { ChatInputPage } from "./chat-input";
 
-import { useChannelId } from "@/app/hooks/use-channel-id";
+import { useChannelId } from "@/hooks/use-channel-id";
 import { useGetChannel } from "@/features/channels/api/use-get-channel";
 import {
   Loader2,

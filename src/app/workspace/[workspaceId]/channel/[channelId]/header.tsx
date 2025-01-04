@@ -15,12 +15,12 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { UseUpdateChannel } from "@/features/channels/api/use-update-channel";
-import { useChannelId } from "@/app/hooks/use-channel-id";
+import { useChannelId } from "@/hooks/use-channel-id";
 import { toast } from "sonner";
 import { UseRemoveChannel } from "@/features/channels/api/use-remove-channel";
-import { useConfirm } from "@/app/hooks/use-confirm";
+import { useConfirm } from "@/hooks/use-confirm";
 import { useRouter } from "next/navigation";
-import { useWorkspaceId } from "@/app/hooks/use-workspace-id";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { useCurrentMember } from "@/features/members/api/use_current_member";
 
 interface HeaderProps {

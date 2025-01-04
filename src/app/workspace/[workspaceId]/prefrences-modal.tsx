@@ -18,8 +18,8 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { UseUpdateWorkspace } from "@/features/workspaces/api/use-update-workspace";
 import { UseRemoveWorkspace } from "@/features/workspaces/api/use-remove-workspace";
-import { useWorkspaceId } from "@/app/hooks/use-workspace-id";
-import { useConfirm } from "@/app/hooks/use-confirm";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import { useConfirm } from "@/hooks/use-confirm";
 
 interface PreferenceModalProps {
   open: boolean;

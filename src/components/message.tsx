@@ -16,7 +16,8 @@ import { toast } from "sonner";
 import { UseUpdateMessage } from "@/features/messages/api/use-update-message";
 import { UseRemoveMessage } from "@/features/messages/api/use-remove-message";
 import { UseToogleReaction } from "@/features/reactions/api/use-toogle-reaction";
-import { useConfirm } from "@/app/hooks/use-confirm";
+import { useConfirm } from "@/hooks/use-confirm";
+import { usePanel } from "@/hooks/use-panel";
 import {
   Doc,
   Id,
@@ -88,6 +89,12 @@ export const Message = ({
   threadImage,
   threadTimestamp,
 }: MessageProps) => {
+  const {
+    parentMessageId,
+    onOpenMessage,
+    onClose,
+  } = usePanel();
+
   const [ConfirmDialog, confirm] = useConfirm(
     "Delete message",
     "Are you sure you want to delete this message?"
@@ -134,7 +141,9 @@ export const Message = ({
         onSuccess: () => {
           toast.success("Message deleted");
 
-          //TODO: Close thread if open
+          if (parentMessageId === id) {
+            onClose();
+          }
         },
         onError: () => {
           toast.error("Failed to delete message");
@@ -180,7 +189,7 @@ export const Message = ({
                 new Date(createdAt)
               )}
             >
-              <button className="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 w-[40px] leading-[22px] text-center hover:underline mr-0.5">
+              <button className="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 w-10 leading-[22px] text-center hover:underline shrink-0">
                 {format(
                   new Date(createdAt),
                   "hh:mm"
@@ -224,7 +233,9 @@ export const Message = ({
               handleEdit={() => {
                 setEditingId(id);
               }}
-              handleThread={() => {}}
+              handleThread={() =>
+                onOpenMessage(id)
+              }
               handleDelete={handleDelete}
               handleReaction={handleReaction}
               hideThreadButton={hideThreadButton}
@@ -324,7 +335,7 @@ export const Message = ({
             handleEdit={() => {
               setEditingId(id);
             }}
-            handleThread={() => {}}
+            handleThread={() => onOpenMessage(id)}
             handleDelete={handleDelete}
             handleReaction={handleReaction}
             hideThreadButton={hideThreadButton}
