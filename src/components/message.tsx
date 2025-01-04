@@ -11,13 +11,17 @@ const Editor = dynamic(
   }
 );
 
+import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { UseUpdateMessage } from "@/features/messages/api/use-update-message";
 import { UseRemoveMessage } from "@/features/messages/api/use-remove-message";
+import { UseToogleReaction } from "@/features/reactions/api/use-toogle-reaction";
+import { useConfirm } from "@/app/hooks/use-confirm";
 import {
   Doc,
   Id,
 } from "../../convex/_generated/dataModel";
+
 import {
   format,
   isToday,
@@ -31,8 +35,8 @@ import {
 } from "./ui/avatar";
 import { Thumbnail } from "./thumbnail";
 import { Toolbar } from "./toolbar";
-import { cn } from "@/lib/utils";
-import { useConfirm } from "@/app/hooks/use-confirm";
+import { v } from "convex/values";
+import { Reactions } from "./reactions";
 
 interface MessageProps {
   id: Id<"messages">;
@@ -99,8 +103,26 @@ export const Message = ({
     isPending: isRemovingMessage,
   } = UseRemoveMessage();
 
+  const {
+    mutate: toogleReaction,
+    isPending: isTooglingReaction,
+  } = UseToogleReaction();
+
   const isPending =
-    isUpdatingMessage || isRemovingMessage;
+    isUpdatingMessage ||
+    isRemovingMessage ||
+    isTooglingReaction;
+
+  const handleReaction = (value: string) => {
+    toogleReaction(
+      { messageId: id, value },
+      {
+        onError: () => {
+          toast.error("Failed to add reaction");
+        },
+      }
+    );
+  };
 
   const handleDelete = async () => {
     const ok = await confirm();
@@ -187,6 +209,11 @@ export const Message = ({
                     (edited)
                   </span>
                 ) : null}
+
+                <Reactions
+                  data={reactions}
+                  onChange={handleReaction}
+                />
               </div>
             )}
           </div>
@@ -199,7 +226,7 @@ export const Message = ({
               }}
               handleThread={() => {}}
               handleDelete={handleDelete}
-              handleReaction={() => {}}
+              handleReaction={handleReaction}
               hideThreadButton={hideThreadButton}
             />
           )}
@@ -281,6 +308,11 @@ export const Message = ({
                   (edited)
                 </span>
               ) : null}
+
+              <Reactions
+                data={reactions}
+                onChange={handleReaction}
+              />
             </div>
           )}
         </div>
@@ -294,7 +326,7 @@ export const Message = ({
             }}
             handleThread={() => {}}
             handleDelete={handleDelete}
-            handleReaction={() => {}}
+            handleReaction={handleReaction}
             hideThreadButton={hideThreadButton}
           />
         )}
