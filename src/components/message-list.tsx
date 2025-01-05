@@ -12,6 +12,7 @@ import { ChannelHero } from "./channel-hero";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { useCurrentMember } from "@/features/members/api/use_current_member";
 import { Loader2 } from "lucide-react";
+import { ConversationHero } from "./conversation-hero";
 
 const TIME_THRESHOLD = 5; // minutes
 
@@ -184,6 +185,13 @@ export const MessageList = ({
             creationTime={channelCreationTime}
           />
         )}
+
+      {variant === "conversation" && (
+        <ConversationHero
+          name={memberName}
+          image={memberImage}
+        />
+      )}
     </div>
   );
 };

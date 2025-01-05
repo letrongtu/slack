@@ -37,7 +37,6 @@ import { UseGenerateUploadUrl } from "@/features/upload/api/use-generate-upload-
 import { UseCreateMessage } from "@/features/messages/api/use-create-message";
 import { useGetMessages } from "@/features/messages/api/use-get-messages";
 import { PiCaretLeft } from "react-icons/pi";
-import { useGetChannel } from "@/features/channels/api/use-get-channel";
 
 const TIME_THRESHOLD = 5; // minutes
 
@@ -92,9 +91,6 @@ export const Thread = ({
     isLoading: loadingMessage,
   } = useGetMessage({
     id: messageId,
-  });
-  const { data: channel } = useGetChannel({
-    id: channelId,
   });
 
   const { results, status, loadMore } =
@@ -207,10 +203,7 @@ export const Thread = ({
             <PiCaretLeft className="size-6 stroke-[1.5]" />
           </Button>
           <p className="text-lg font-bold">
-            Thread{" "}
-            <span className="text-sm font-normal text-muted-foreground">
-              # {channel?.name}
-            </span>
+            Thread
           </p>
         </div>
 
@@ -233,10 +226,7 @@ export const Thread = ({
             <PiCaretLeft className="size-6 stroke-[1.5]" />
           </Button>
           <p className="text-lg font-bold">
-            Thread{" "}
-            <span className="text-sm font-normal text-muted-foreground">
-              # {channel?.name}
-            </span>
+            Thread
           </p>
         </div>
 
@@ -261,10 +251,7 @@ export const Thread = ({
           <PiCaretLeft className="size-6 stroke-[1.5]" />
         </Button>
         <p className="text-lg font-bold">
-          Thread{" "}
-          <span className="text-sm font-normal text-muted-foreground">
-            # {channel?.name}
-          </span>
+          Thread
         </p>
       </div>
       <div className="flex-1 flex flex-col pb-4 overflow-y-auto messages-scollbar">
