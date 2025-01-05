@@ -334,6 +334,9 @@ export const Thread = ({
                     threadImage={
                       message.threadImage
                     }
+                    threadName={
+                      message.threadName
+                    }
                     threadTimestamp={
                       message.threadTimestamp
                     }

@@ -38,6 +38,7 @@ import { Thumbnail } from "./thumbnail";
 import { Toolbar } from "./toolbar";
 import { v } from "convex/values";
 import { Reactions } from "./reactions";
+import { ThreadBar } from "./thread-bar";
 
 interface MessageProps {
   id: Id<"messages">;
@@ -63,6 +64,7 @@ interface MessageProps {
   hideThreadButton?: boolean;
   threadCount?: number;
   threadImage?: string;
+  threadName?: string;
   threadTimestamp?: number;
 }
 
@@ -87,6 +89,7 @@ export const Message = ({
   hideThreadButton,
   threadCount,
   threadImage,
+  threadName,
   threadTimestamp,
 }: MessageProps) => {
   const {
@@ -223,6 +226,15 @@ export const Message = ({
                   data={reactions}
                   onChange={handleReaction}
                 />
+                <ThreadBar
+                  count={threadCount}
+                  image={threadImage}
+                  name={threadName}
+                  timestamp={threadTimestamp}
+                  onClick={() =>
+                    onOpenMessage(id)
+                  }
+                />
               </div>
             )}
           </div>
@@ -323,6 +335,13 @@ export const Message = ({
               <Reactions
                 data={reactions}
                 onChange={handleReaction}
+              />
+              <ThreadBar
+                count={threadCount}
+                image={threadImage}
+                name={threadName}
+                timestamp={threadTimestamp}
+                onClick={() => onOpenMessage(id)}
               />
             </div>
           )}
