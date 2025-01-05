@@ -95,6 +95,7 @@ export const Message = ({
   const {
     parentMessageId,
     onOpenMessage,
+    onOpenProfile,
     onClose,
   } = usePanel();
 
@@ -275,7 +276,11 @@ export const Message = ({
         )}
       >
         <div className="flex items-start gap-2">
-          <button>
+          <button
+            onClick={() =>
+              onOpenProfile(memberId)
+            }
+          >
             <Avatar>
               <AvatarImage
                 className="rouned=md"
@@ -302,7 +307,9 @@ export const Message = ({
             <div className="flex flex-col w-full overflow-hidden">
               <div className="text-sm">
                 <button
-                  onClick={() => {}}
+                  onClick={() =>
+                    onOpenProfile(memberId)
+                  }
                   className="font-bold text-primary hover:underline"
                 >
                   {authorName}
