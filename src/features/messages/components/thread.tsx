@@ -22,7 +22,6 @@ import { toast } from "sonner";
 import {
   AlertTriangle,
   Loader2,
-  XIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -184,6 +183,14 @@ export const Thread = ({
     {} as Record<string, typeof results>
   );
 
+  const sortedGroups = Object.fromEntries(
+    Object.entries(groupMessages).sort(
+      ([a], [b]) =>
+        new Date(a).getTime() -
+        new Date(b).getTime()
+    )
+  );
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView();
   }, [results]);
@@ -283,7 +290,7 @@ export const Thread = ({
           </div>
         )}
 
-        {Object.entries(groupMessages || {}).map(
+        {Object.entries(sortedGroups || {}).map(
           ([dateKey, messages]) => (
             <div key={dateKey}>
               {messages.map((message, index) => {

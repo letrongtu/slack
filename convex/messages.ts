@@ -425,7 +425,7 @@ export const create = mutation({
         body: args.body,
         image: args.image,
         channelId: args.channelId,
-        conversationId: args.conversationId,
+        conversationId: _conversationId,
         workspaceId: args.workspaceId,
         parentMessageId: args.parentMessageId,
       }
@@ -510,6 +510,44 @@ export const remove = mutation({
     ) {
       throw new Error("Not authenticated");
     }
+
+    const [childMessages] = await Promise.all([
+      ctx.db
+        .query("messages")
+        .filter((q) =>
+          q.eq(
+            q.field("parentMessageId"),
+            args.id
+          )
+        )
+        .collect(),
+    ]);
+
+    const relatedReactionsPromises = [
+      // populate all reactions of child messages
+      ...childMessages.map(async (message) => {
+        const relatedReactions =
+          populateReactions(ctx, message._id);
+
+        await ctx.db.delete(message._id);
+        return relatedReactions;
+      }),
+      // populate all reactions of the message
+      populateReactions(ctx, args.id),
+    ];
+
+    const allRelatedReactions = await Promise.all(
+      relatedReactionsPromises
+    );
+
+    // Delete all related reactions
+    await Promise.all(
+      allRelatedReactions
+        .flat()
+        .map(async (reaction) => {
+          await ctx.db.delete(reaction._id);
+        })
+    );
 
     await ctx.db.delete(args.id);
 
