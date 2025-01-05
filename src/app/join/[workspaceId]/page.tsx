@@ -1,6 +1,6 @@
 "use client";
 
-import { useWorkspaceId } from "@/app/hooks/use-workspace-id";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
