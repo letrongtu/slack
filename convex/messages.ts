@@ -521,6 +521,7 @@ export const remove = mutation({
           )
         )
         .collect(),
+      populateReactions(ctx, args.id),
     ]);
 
     const relatedReactionsPromises = [

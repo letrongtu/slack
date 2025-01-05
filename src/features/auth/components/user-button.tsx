@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useCurrentUser } from "../api/use-current-user";
-import { Loader, LogOut } from "lucide-react";
+import { Loader2, LogOut } from "lucide-react";
 import { useAuthActions } from "@convex-dev/auth/react";
 
 const UserButton = () => {
@@ -23,7 +23,7 @@ const UserButton = () => {
 
   if (isLoading) {
     return (
-      <Loader className="size-4 animate-spin text-muted-foreground" />
+      <Loader2 className="size-4 animate-spin text-muted-foreground" />
     );
   }
 
@@ -58,9 +58,6 @@ const UserButton = () => {
         >
           <LogOut className="size-4 mr-2" />
           Logout
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          Settings
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

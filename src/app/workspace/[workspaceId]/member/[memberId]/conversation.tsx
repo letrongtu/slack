@@ -6,6 +6,7 @@ import { useGetMessages } from "@/features/messages/api/use-get-messages";
 import { Loader2 } from "lucide-react";
 import { Header } from "./header";
 import { ChatInputPage } from "./chat-input";
+import { usePanel } from "@/hooks/use-panel";
 
 interface ConversationProps {
   id: Id<"conversations">;
@@ -15,6 +16,7 @@ export const Conversation = ({
   id,
 }: ConversationProps) => {
   const memberId = useMemberId();
+  const { onOpenProfile } = usePanel();
 
   const {
     data: member,
@@ -40,7 +42,7 @@ export const Conversation = ({
       <Header
         memberImage={member?.user.image}
         memberName={member?.user.name}
-        onClick={() => {}}
+        onClick={() => onOpenProfile(memberId)}
       />
 
       <MessageList

@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Loader, Plus } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export const WorkplaceSwitcher = () => {
@@ -38,7 +38,7 @@ export const WorkplaceSwitcher = () => {
       <DropdownMenuTrigger asChild>
         <Button className="size-9 relative overflow-hidden bg-[#ABABAD] hover:bg-[#ABABAD]/80 text-slate-800 font-semibold">
           {workspaceLoading ? (
-            <Loader className="size-5 animate-spin shrink-0" />
+            <Loader2 className="size-5 animate-spin shrink-0" />
           ) : (
             workspace?.name
               .charAt(0)

@@ -10,7 +10,7 @@ import { useGetMembers } from "@/features/members/api/use_get_members";
 import {
   AlertTriangle,
   HashIcon,
-  Loader,
+  Loader2,
   MessageSquareText,
   SendHorizontalIcon,
 } from "lucide-react";
@@ -48,7 +48,7 @@ export const WorkspaceSidebar = () => {
   if (workspaceLoading || memberLoading) {
     return (
       <div className="flex flex-col bg-[#5E2C5F] h-full items-center justify-center">
-        <Loader className="size-5 animate-spin text-white" />
+        <Loader2 className="size-5 animate-spin text-white" />
       </div>
     );
   }

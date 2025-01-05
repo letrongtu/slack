@@ -1,6 +1,7 @@
 import { useState } from "react";
-import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
+import EmojiPicker from "emoji-picker-react"; // another picker lib
 
 import {
   Popover,
